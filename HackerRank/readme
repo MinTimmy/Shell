@@ -1,0 +1,12 @@
+awk
+ORS:輸出資料每組分隔符（Output Record Separator Variable）
+
+NR:第幾組資料（Number of Records Variable）
+
+NF：每組資料第幾行 (Number of Fields)
+
+以下兩個變數主要是在使用多個檔案，一起使用awk處理時會用到的
+
+FILENAME:目前輸入資料的檔案名稱
+
+FNR:目前第幾筆資料相對於當前輸入檔案
