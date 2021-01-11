@@ -10,3 +10,44 @@ NF：每組資料第幾行 (Number of Fields)
 FILENAME:目前輸入資料的檔案名稱
 
 FNR:目前第幾筆資料相對於當前輸入檔案
+
+
+https://www.gnu.org/software/gawk/manual/html_node/String-Functions.html
+gensub(regexp, replacement, how [, target]) #
+
+    Search the target string target for matches of the regular expression regexp. If how is a string beginning with ‘g’ or ‘G’ (short for “global”), then replace all matches of regexp with replacement. Otherwise, treat how as a number indicating which match of regexp to replace. Treat numeric values less than one as if they were one. If no target is supplied, use $0. Return the modified string as the result of the function. The original target string is not changed.
+
+    gensub() is a general substitution function. Its purpose is to provide more features than the standard sub() and gsub() functions.
+
+    gensub() provides an additional feature that is not available in sub() or gsub(): the ability to specify components of a regexp in the replacement text. This is done by using parentheses in the regexp to mark the components and then specifying ‘\N’ in the replacement text, where N is a digit from 1 to 9. For example:
+
+    $ gawk '
+    > BEGIN {
+    >      a = "abc def"
+    >      b = gensub(/(.+) (.+)/, "\\2 \\1", "g", a)
+    >      print b
+    > }'
+    -| def abc
+
+    As with sub(), you must type two backslashes in order to get one into the string. In the replacement text, the sequence ‘\0’ represents the entire matched text, as does the character ‘&’.
+
+    The following example shows how you can use the third argument to control which match of the regexp should be changed:
+
+    $ echo a b c a b c |
+    > gawk '{ print gensub(/a/, "AA", 2) }'
+    -| a b c AA b c
+
+    In this case, $0 is the default target string. gensub() returns the new string as its result, which is passed directly to print for printing.
+
+    If the how argument is a string that does not begin with ‘g’ or ‘G’, or if it is a number that is less than or equal to zero, only one substitution is performed. If how is zero, gawk issues a warning message.
+
+    If regexp does not match target, gensub()’s return value is the original unchanged value of target.
+gsub(regexp, replacement [, target])
+
+    Search target for all of the longest, leftmost, nonoverlapping matching substrings it can find and replace them with replacement. The ‘g’ in gsub() stands for “global,” which means replace everywhere. For example:
+
+    { gsub(/Britain/, "United Kingdom"); print }
+
+    replaces all occurrences of the string ‘Britain’ with ‘United Kingdom’ for all input records.
+
+    The gsub() function returns the number of substitutions made. If the variable to search and alter (target) is omitted, then the entire input record ($0) is used. As in sub(), the characters ‘&’ and ‘\’ are special, and the third argument must be assignable.
