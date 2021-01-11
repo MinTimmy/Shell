@@ -1,6 +1,5 @@
 #!/usr/bin/awk -f
 
-
 {
     check = 1
     for(i=2; i <= NF; i++){
